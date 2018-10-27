@@ -3,4 +3,6 @@
     <string name="title_activity_vote">VoteActivity</string>
     <string name="vote">Vote</string>
     <string name="add">Add</string>
+    <string name="default_group_id">1234</string>
+    <string name="your_group_id_label">Your group ID:</string>
 </resources>
