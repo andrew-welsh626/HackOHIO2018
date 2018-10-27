@@ -5,33 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tv_label_join_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/enter_your_group_s_id"
+        app:layout_constraintBottom_toTopOf="@+id/editTextJoin"
+        app:layout_constraintEnd_toEndOf="@+id/editTextJoin"
+        app:layout_constraintStart_toStartOf="@+id/editTextJoin"
+        android:gravity="center"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/joinbtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="13dp"
-        android:text="Join"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_light_buttons"
+        android:textColor="#FFFFFF"
+        android:text="@string/join_a_room"
+        app:layout_constraintEnd_toEndOf="@+id/editTextJoin"
+        app:layout_constraintStart_toStartOf="@+id/editTextJoin"
         app:layout_constraintTop_toBottomOf="@+id/editTextJoin" />
 
     <EditText
         android:id="@+id/editTextJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
+        android:layout_marginTop="90dp"
         android:ems="10"
-        android:hint="Group Name"
         android:inputType="textPersonName"
+        android:shadowColor="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/joinbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
