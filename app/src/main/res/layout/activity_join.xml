@@ -28,9 +28,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_light_buttons"
-        android:textColor="#FFFFFF"
         android:text="@string/join_a_room"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/editTextJoin"
         app:layout_constraintStart_toStartOf="@+id/editTextJoin"
         app:layout_constraintTop_toBottomOf="@+id/editTextJoin" />

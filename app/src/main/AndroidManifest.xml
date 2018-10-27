@@ -16,23 +16,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"
-            android:label= "AddActivity"
-            android:parentActivityName=".VoteActivity">
-        </activity>/>
-        <activity android:name=".Results" />
-        <activity android:name=".CreateActivity"
-            android:label= "CreateActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>/>
-        <activity android:name=".JoinActivity"
-            android:label= "JoinActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
-        <activity android:name=".VoteActivity"
+        <activity
+            android:name=".AddActivity"
+            android:label="Add an option"
+            android:parentActivityName=".VoteActivity"/>
+        <activity android:name=".Results"
+            android:label="View Results"
+            android:parentActivityName=".VoteActivity"/>
+        <activity
+            android:name=".CreateActivity"
+            android:label="Create a Room"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".JoinActivity"
+            android:label="Join a Room"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".VoteActivity"
             android:label="@string/title_activity_vote"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
