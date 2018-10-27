@@ -32,13 +32,14 @@ public class AddActivity extends AppCompatActivity {
     protected void addOption(View v, String groupName){
         EditText optionNameET = findViewById(R.id.editText);
         String optionName = optionNameET.getText().toString();
-        // Add the option to the database
 
+        // Add the option to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("groups/" + groupName);
         OptionModel option = new OptionModel(optionName);
         myRef.push().setValue(option);
 
+        // Navigate back to the Voting Activity
         Intent intent = new Intent(this, VoteActivity.class);
         intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
         startActivity(intent);

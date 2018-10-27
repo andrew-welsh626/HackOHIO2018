@@ -32,7 +32,7 @@
         android:ems="10"
         android:hint="Group Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/addbtn"
+        app:layout_constraintBottom_toTopOf="@+id/createbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

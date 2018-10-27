@@ -89,19 +89,4 @@ public class Results extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    protected TreeMap<String, Integer> analyze(Map<String, Object> data) {
-        TreeMap<String, Integer> rankings = new TreeMap<>();
-        for (Map.Entry<String, Object> option : data.entrySet()) {
-            String name = option.getKey();
-            Map<String, Integer> optionMap = (Map<String, Integer>) option.getValue();
-            for (Integer i : optionMap.values()) {
-                int weight = 4 - i;
-                if (rankings.get(name) == null) {
-                    rankings.put(name, 0);
-                }
-                rankings.put(name, rankings.get(weight) + weight);
-            }
-        }
-        return rankings;
-    }
 }

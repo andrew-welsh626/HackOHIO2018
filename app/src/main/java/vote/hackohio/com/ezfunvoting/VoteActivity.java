@@ -15,6 +15,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -33,9 +34,10 @@ public class VoteActivity extends AppCompatActivity {
      * Instance variables
      */
     private RecyclerView votingRecyclerView;
+    private TextView groupIdTextView;
     private OptionsAdapter adapter;
     private List<OptionModel> options = new ArrayList<>();
-    private String groupName;
+    private String groupID;
     private String userID;
 
     /**
@@ -51,9 +53,12 @@ public class VoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
 
         votingRecyclerView = findViewById(R.id.rv_vote);
+        groupIdTextView = findViewById(R.id.group_id_tv);
+
         createOrReadUID();
 
-        this.groupName = getIntent().getStringExtra(GROUP_NAME_EXTRA_KEY);
+        this.groupID = getIntent().getStringExtra(GROUP_NAME_EXTRA_KEY);
+        groupIdTextView.setText(groupID);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(getItemTouchHelper());
 
@@ -102,7 +107,7 @@ public class VoteActivity extends AppCompatActivity {
      */
     private void sendVotesToDatabase() {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupName);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupID);
         for (int i = 0; i < options.size(); i++) {
             OptionModel option = options.get(i);
             option.rankings.put(this.userID, i + 1);
@@ -116,15 +121,19 @@ public class VoteActivity extends AppCompatActivity {
      */
     private void setupDataListener() {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("groups/" + this.groupName);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("groups/" + this.groupID);
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                OptionModel option = dataSnapshot.getValue(OptionModel.class);
-                option.setId(dataSnapshot.getKey());
-                options.add(option);
-                adapter.notifyDataSetChanged();
 
+                if (dataSnapshot.getKey().equals("name")) {
+                    getSupportActionBar().setTitle((String) dataSnapshot.getValue());
+                } else if (!dataSnapshot.getKey().equals("id")) {
+                    OptionModel option = dataSnapshot.getValue(OptionModel.class);
+                    option.setId(dataSnapshot.getKey());
+                    options.add(option);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -157,7 +166,7 @@ public class VoteActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.add_option:
                 Intent intent = new Intent(this, AddActivity.class);
-                intent.putExtra(GROUP_NAME_EXTRA_KEY, groupName);
+                intent.putExtra(GROUP_NAME_EXTRA_KEY, groupID);
                 startActivity(intent);
                 return true;
             case R.id.send_votes:
