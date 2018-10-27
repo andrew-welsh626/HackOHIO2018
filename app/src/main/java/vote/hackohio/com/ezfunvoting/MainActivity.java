@@ -1,4 +1,5 @@
 package vote.hackohio.com.ezfunvoting;
+
 import android.content.Intent;
 import android.view.View;
 
@@ -28,6 +29,4 @@ Button create = findViewById(R.id.button2);
             }
         });
     }
-
-
-    }
+}
