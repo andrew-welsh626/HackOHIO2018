@@ -36,7 +36,7 @@ public class CreateActivity extends AppCompatActivity {
         // create the spinner
         final Spinner algorithmSpinner = findViewById(R.id.algSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.SpinnerChoices, android.R.layout.simple_spinner_item);
+                R.array.SpinnerChoices, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         algorithmSpinner.setAdapter(adapter);
 
