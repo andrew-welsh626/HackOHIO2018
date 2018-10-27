@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -17,48 +16,45 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.utilities.Tree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class Results extends AppCompatActivity {
-    RecyclerView resultRecyclerView;
-    ResultsAdapter adapter;
-    List<OptionModel> options = new ArrayList<>();
-    String groupName;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    TextView winner;
+
+    private RecyclerView resultRecyclerView;
+    private ResultsAdapter adapter;
+    private List<OptionModel> options = new ArrayList<>();
+    private String groupName;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private TextView winnerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        resultRecyclerView = findViewById(R.id.rv_results);
-        winner = findViewById(R.id.tv_winner);
-        adapter = new ResultsAdapter(options);
+        winnerTextView = findViewById(R.id.tv_winner);
+        groupName = getIntent().getStringExtra("GROUP_NAME");
+        
+        /* Create the Recycler view and its adapter */
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        resultRecyclerView = findViewById(R.id.rv_results);
         resultRecyclerView.setLayoutManager(mLayoutManager);
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
         resultRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        resultRecyclerView.setAdapter(adapter);
-        groupName = getIntent().getStringExtra("GROUP_NAME");
 
+        /* Attach and populate the adapter */
+        adapter = new ResultsAdapter(options);
+        resultRecyclerView.setAdapter(adapter);
         generateRankings();
 
     }
 
+    /*
+     * Define behavior for the ActionBar home button
+     */
     @Override
     public boolean onSupportNavigateUp() {
         Intent intent = new Intent(this, VoteActivity.class);
@@ -122,7 +118,7 @@ public class Results extends AppCompatActivity {
         Collections.sort(options, sortRankings);
         adapter.notifyDataSetChanged();
 
-        winner.setText(options.get(0).name);
+        winnerTextView.setText(options.get(0).name);
     }
 
 }

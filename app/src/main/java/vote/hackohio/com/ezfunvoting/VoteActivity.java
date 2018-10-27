@@ -80,6 +80,32 @@ public class VoteActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(votingRecyclerView);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_voting, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.add_option:
+                Intent intent = new Intent(this, AddActivity.class);
+                intent.putExtra(GROUP_NAME_EXTRA_KEY, groupID);
+                startActivity(intent);
+                return true;
+            case R.id.send_votes:
+                sendVotesToDatabase();
+                goToResultsPage();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
     /**
      * Attempts to read the user ID from the shared preferences file. If it does not exist, the user
      * is given a new UID and this value is stored in the Shared Preferences file.
@@ -96,27 +122,6 @@ public class VoteActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_voting, menu);
-        return true;
-    }
-
-    /**
-     * Update each of the options with this user's ranking, then put each of the options in the
-     * database with those rankings.
-     */
-    private void sendVotesToDatabase() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupID);
-        for (int i = 0; i < options.size(); i++) {
-            OptionModel option = options.get(i);
-            option.rankings.put(this.userID, i + 1);
-            ref.child(option.getId()).setValue(options.get(i));
-        }
-
-    }
-
     /**
      * Sets up the Firebase database event listener to keep data up to date with the database.
      */
@@ -125,6 +130,7 @@ public class VoteActivity extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                 if (dataSnapshot.getKey().equals("name")) {
                     getSupportActionBar().setTitle((String) dataSnapshot.getValue());
                 } else if (!dataSnapshot.getKey().equals("id") && !dataSnapshot.getKey().equals("algorithm")) {
@@ -167,23 +173,24 @@ public class VoteActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.add_option:
-                Intent intent = new Intent(this, AddActivity.class);
-                intent.putExtra(GROUP_NAME_EXTRA_KEY, groupID);
-                startActivity(intent);
-                return true;
-            case R.id.send_votes:
-                sendVotesToDatabase();
-                goToResultsPage();
-                return true;
+    /**
+     * Update each of the options with this user's ranking, then put each of the options in the
+     * database with those rankings.
+     */
+    private void sendVotesToDatabase() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupID);
+        for (int i = 0; i < options.size(); i++) {
+            OptionModel option = options.get(i);
+            option.rankings.put(this.userID, i + 1);
+            ref.child(option.getId()).setValue(options.get(i));
         }
 
-        return super.onOptionsItemSelected(item);
+    }
 
+    public void goToResultsPage(){
+        Intent createActivity = new Intent(this, Results.class);
+        createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, this.groupID);
+        startActivity(createActivity);
     }
 
     /**
@@ -211,12 +218,6 @@ public class VoteActivity extends AppCompatActivity {
 
         };
 
-    }
-
-    public void goToResultsPage(){
-        Intent createActivity = new Intent(this, Results.class);
-        createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, this.groupID);
-        startActivity(createActivity);
     }
 
     public class SingleUserOptionComparator implements Comparator<OptionModel> {

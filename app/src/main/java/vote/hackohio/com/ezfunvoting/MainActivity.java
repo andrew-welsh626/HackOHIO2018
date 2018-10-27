@@ -13,10 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Intent intent = new Intent(MainActivity.this, VoteActivity.class);
-//        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, "new group");
-//        startActivity(intent);
-
         Button create = findViewById(R.id.button_create);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
