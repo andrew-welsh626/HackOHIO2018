@@ -35,6 +35,11 @@ public class OptionModel implements Comparable {
         return other instanceof OptionModel && ((OptionModel) other).name == this.name;
     }
 
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
     public String getName() {
         return name;
     }
