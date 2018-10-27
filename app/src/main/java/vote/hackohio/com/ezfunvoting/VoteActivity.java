@@ -112,7 +112,6 @@ public class VoteActivity extends AppCompatActivity {
             case R.id.send_votes:
                 sendVotesToDatabase();
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);

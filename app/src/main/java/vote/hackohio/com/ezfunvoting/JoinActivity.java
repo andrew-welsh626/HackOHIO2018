@@ -27,5 +27,3 @@ public class JoinActivity extends AppCompatActivity {
         startActivity(joinGroupPage);
     }
 }
-
-
