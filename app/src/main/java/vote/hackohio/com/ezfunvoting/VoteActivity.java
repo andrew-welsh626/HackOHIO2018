@@ -85,7 +85,6 @@ public class VoteActivity extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 OptionModel option = dataSnapshot.getValue(OptionModel.class);
                 option.setId(dataSnapshot.getKey());
                 options.add(option);

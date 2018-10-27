@@ -19,6 +19,7 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".CreateActivity" />
         <activity android:name=".JoinActivity" />
+        <activity android:name=".Results" />
         <activity
             android:name=".VoteActivity"
             android:label="@string/title_activity_vote"
