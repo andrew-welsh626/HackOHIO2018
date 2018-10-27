@@ -23,7 +23,7 @@ public class JoinActivity extends AppCompatActivity {
 
     protected void joinGroup (View v) {
         String groupName = findViewById(R.id.editText).toString();
-        Intent joinGroupPage = new Intent(JoinActivity.this, VoteActivity.class);
+        Intent createGroupPage = new Intent(JoinActivity.this, VoteActivity.class);
         startActivity(joinGroupPage);
     }
 }
