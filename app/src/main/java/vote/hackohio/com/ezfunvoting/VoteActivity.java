@@ -9,13 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,34 +37,12 @@ public class VoteActivity extends AppCompatActivity {
 
         votingRecyclerView = findViewById(R.id.rv_vote);
 
+        /* TODO store this in the config fi;e */
         this.userID = UUID.randomUUID().toString();
 
-        ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(
-                        new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(getItemTouchHelper());
 
-                final int fromPosition = viewHolder.getAdapterPosition();
-                final int toPosition = target.getAdapterPosition();
-
-                OptionModel movedOptions = options.remove(fromPosition);
-
-                if (toPosition > fromPosition) {
-                    options.add(toPosition - 1, movedOptions);
-                } else {
-                    options.add(toPosition, movedOptions);
-                }
-
-                adapter.notifyItemMoved(fromPosition, toPosition);
-
-                return true;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {}
-        });
-
+        /* Create the adapter and setup the recyclerview */
         adapter = new OptionsAdapter(options);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         votingRecyclerView.setLayoutManager(mLayoutManager);
@@ -76,6 +50,7 @@ public class VoteActivity extends AppCompatActivity {
         votingRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         votingRecyclerView.setAdapter(adapter);
 
+        /* Dummy Data */
         options.add(new OptionModel("Option 1"));
         options.add(new OptionModel("Option 2"));
         options.add(new OptionModel("Option 3"));
@@ -117,6 +92,32 @@ public class VoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    public ItemTouchHelper.SimpleCallback getItemTouchHelper() {
+
+        return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                final int fromPosition = viewHolder.getAdapterPosition();
+                final int toPosition = target.getAdapterPosition();
+
+                OptionModel movedOptions = options.remove(fromPosition);
+                options.add(toPosition, movedOptions);
+                adapter.notifyItemMoved(fromPosition, toPosition);
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {}
+
+        };
+
+    }
+
+
 
 
 }
