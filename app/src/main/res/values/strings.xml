@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EZFunVoting</string>
+    <string name="title_activity_vote">VoteActivity</string>
+    <string name="vote">Vote</string>
+    <string name="add">Add</string>
 </resources>
