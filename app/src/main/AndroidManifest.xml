@@ -16,13 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainVotePage" />
+        <activity android:name=".AddActivity" />
         <activity
-            android:name=".AddActivity"
-            android:parentActivityName=".MainVotePage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainVotePage"/>
+            android:name=".VoteActivity"
+            android:label="@string/title_activity_vote"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
