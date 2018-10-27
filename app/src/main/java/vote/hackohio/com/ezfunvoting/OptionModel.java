@@ -1,9 +1,10 @@
 package vote.hackohio.com.ezfunvoting;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OptionModel {
+public class OptionModel implements Comparable {
 
     public String name;
     public Map<String, Integer> rankings;
@@ -48,5 +49,11 @@ public class OptionModel {
 
     public void setRankings(Map<String, Integer> rankings) {
         this.rankings = rankings;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        OptionModel other = (OptionModel)(o);
+        return 0;
     }
 }

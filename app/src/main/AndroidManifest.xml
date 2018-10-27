@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddActivity" />
+        <activity android:name=".Results" />
         <activity android:name=".CreateActivity"
             android:label= "CreateActivity"
             android:parentActivityName=".MainActivity">

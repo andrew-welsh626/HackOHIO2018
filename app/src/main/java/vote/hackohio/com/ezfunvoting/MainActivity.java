@@ -1,5 +1,4 @@
 package vote.hackohio.com.ezfunvoting;
-
 import android.content.Intent;
 import android.view.View;
 
@@ -14,18 +13,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, VoteActivity.class);
-        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, "new group");
-        startActivity(intent);
-
-        Button create = findViewById(R.id.button3);
+        Button create = findViewById(R.id.button2);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent CreateActivity = new Intent(MainActivity.this, CreateActivity.class);
                 startActivity(CreateActivity);
             }
         });
-        Button join = findViewById(R.id.button2);
+        Button join = findViewById(R.id.button3);
         join.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent JoinActivity = new Intent(MainActivity.this, JoinActivity.class);
@@ -33,4 +28,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+
+    }

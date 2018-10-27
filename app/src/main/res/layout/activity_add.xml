@@ -17,8 +17,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="140dp"
         android:ems="10"
+        android:hint="Option to vote on"
         android:inputType="textPersonName"
-        android:text="Option to vote on"
         app:layout_constraintBottom_toTopOf="@+id/addbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
