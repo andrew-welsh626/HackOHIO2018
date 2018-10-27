@@ -80,10 +80,13 @@ public class Results extends AppCompatActivity {
                 });
     }
 
+    /*
+    * Adds another voted option to the ranking, and keeps the options sorted
+    */
     protected void reorderRanks(OptionModel om) {
+        OptionComparator sortRankings = new OptionComparator();
         options.add(om);
-        Collections.sort(options);
-        adapter.notifyDataSetChanged();
+        Collections.sort(options, sortRankings);
     }
 
 }
