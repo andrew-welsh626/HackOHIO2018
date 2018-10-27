@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -24,10 +22,8 @@ public class JoinActivity extends AppCompatActivity {
     }
 
     protected void joinGroup (View v) {
-        EditText groupNameEditText = findViewById(R.id.editText);
-        String groupName = groupNameEditText.getText().toString();
+        String groupName = findViewById(R.id.editText).toString();
         Intent createGroupPage = new Intent(JoinActivity.this, VoteActivity.class);
-        createGroupPage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
-        startActivity(createGroupPage);
+        startActivity(joinGroupPage);
     }
 }
