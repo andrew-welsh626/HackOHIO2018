@@ -1,5 +1,6 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,11 +24,15 @@ public class VoteActivity extends AppCompatActivity {
     RecyclerView votingRecyclerView;
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
+    String groupName;
+
+    public static final String GROUP_NAME_EXTRA_KEY = "GROUP_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
+
 
         votingRecyclerView = findViewById(R.id.rv_vote);
 
@@ -48,6 +54,24 @@ public class VoteActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_voting, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.add_option:
+                Intent intent = new Intent(this, AddActivity.class);
+                intent.putExtra(GROUP_NAME_EXTRA_KEY, groupName);
+                startActivity(intent);
+                return true;
+            case R.id.send_votes:
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionViewHolder> {
