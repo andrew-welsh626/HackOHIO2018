@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,12 +31,14 @@ public class AddActivity extends AppCompatActivity {
     }
 
     protected void addOption(View v, String groupName){
-        String optionName = findViewById(R.id.editText).toString();
+        EditText optionNameET = findViewById(R.id.editText);
+        String optionName = optionNameET.getText().toString();
         // Add the option to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("groups/" + groupName +"/" + optionName);
 
-        myRef.setValue(new HashMap<String, Integer>());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("groups/" + groupName);
+        OptionModel option = new OptionModel(optionName);
+        myRef.push().setValue(option);
 
     }
 }
