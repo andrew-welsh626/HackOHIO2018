@@ -30,11 +30,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Results extends AppCompatActivity {
-
     RecyclerView resultRecyclerView;
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
-    String groupName = "1004"; //getIntent().getStringExtra("GROUP_NAME");
+    String groupName;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
@@ -49,6 +48,7 @@ public class Results extends AppCompatActivity {
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
         resultRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         resultRecyclerView.setAdapter(adapter);
+        groupName = getIntent().getStringExtra("GROUP_NAME");
 
         generateRankings();
 
@@ -85,11 +85,12 @@ public class Results extends AppCompatActivity {
     }
 
     /*
-    * Sorts the options
+    * Sorts the options and updates the page
     */
     protected void reorderRanks() {
         OptionComparator sortRankings = new OptionComparator();
         Collections.sort(options, sortRankings);
+        adapter.notifyDataSetChanged();
     }
 
 }
