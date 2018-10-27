@@ -25,7 +25,8 @@ public class JoinActivity extends AppCompatActivity {
     public void joinGroup (View v) {
         EditText groupNameET = findViewById(R.id.editText);
         String groupName = groupNameET.getText().toString();
-        Intent createGroupPage = new Intent(JoinActivity.this, VoteActivity.class);
-        startActivity(createGroupPage);
+        Intent joinVotePage = new Intent(JoinActivity.this, VoteActivity.class);
+        joinVotePage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(joinVotePage);
     }
 }

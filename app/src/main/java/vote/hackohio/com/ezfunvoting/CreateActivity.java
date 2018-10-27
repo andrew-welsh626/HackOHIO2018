@@ -11,6 +11,7 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create);
 
         final Button button = findViewById(R.id.addbtn);
         button.setOnClickListener(new View.OnClickListener() {
