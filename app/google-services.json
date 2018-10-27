@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113619299419",
+    "firebase_url": "https://ezfunvoting.firebaseio.com",
+    "project_id": "ezfunvoting",
+    "storage_bucket": "ezfunvoting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113619299419:android:ac96f54a6bba8f40",
+        "android_client_info": {
+          "package_name": "vote.hackohio.com.ezfunvoting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113619299419-tu19qhj6et15qdi5l7stcr79tqate0q0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vote.hackohio.com.ezfunvoting",
+            "certificate_hash": "020388ac79b08372481cc48f215d974f97438ca6"
+          }
+        },
+        {
+          "client_id": "113619299419-blefs1t61ugr16ervlmjbodtr4nlgili.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_Jha3hTHCtOjf93E-c_L14nYc90A8vyI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113619299419-blefs1t61ugr16ervlmjbodtr4nlgili.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
