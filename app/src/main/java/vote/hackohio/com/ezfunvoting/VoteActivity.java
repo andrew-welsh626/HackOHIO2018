@@ -125,7 +125,6 @@ public class VoteActivity extends AppCompatActivity {
                 option.setId(dataSnapshot.getKey());
                 options.add(option);
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
