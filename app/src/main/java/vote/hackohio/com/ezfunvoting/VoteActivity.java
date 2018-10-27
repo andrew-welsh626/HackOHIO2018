@@ -35,7 +35,7 @@ public class VoteActivity extends AppCompatActivity {
     private RecyclerView votingRecyclerView;
     private OptionsAdapter adapter;
     private List<OptionModel> options = new ArrayList<>();
-    private String groupName = "new group";
+    private String groupName;
     private String userID;
 
     /**
@@ -52,6 +52,8 @@ public class VoteActivity extends AppCompatActivity {
 
         votingRecyclerView = findViewById(R.id.rv_vote);
         createOrReadUID();
+
+        this.groupName = getIntent().getStringExtra(GROUP_NAME_EXTRA_KEY);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(getItemTouchHelper());
 
