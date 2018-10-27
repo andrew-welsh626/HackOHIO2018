@@ -1,5 +1,6 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +35,8 @@ public class Results extends AppCompatActivity {
     RecyclerView resultRecyclerView;
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
+    String groupName;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +57,34 @@ public class Results extends AppCompatActivity {
 
     protected void generateRankings(String groupName, String algName) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = new Intent(this, VoteActivity.class);
+        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(intent);
+        finish();
+
+        return true;
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+
+        Intent intent = new Intent(this, VoteActivity.class);
+        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(intent);
+        finish();
+
+        return true;
+    }
+
+    protected void generateRankings() {
         DatabaseReference ref = database.getReference("groups/" + groupName);
         ref.addChildEventListener(
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
+                        if(!dataSnapshot.getKey().equals("name")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
                             options.add(o);
                             reorderRanks();

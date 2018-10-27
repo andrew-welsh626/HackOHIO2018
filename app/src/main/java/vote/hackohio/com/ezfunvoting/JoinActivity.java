@@ -1,5 +1,6 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,9 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+
+        EditText groupIDET = findViewById(R.id.editTextJoin);
+        groupIDET.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
 
         final Button button = findViewById(R.id.joinbtn);
         button.setOnClickListener(new View.OnClickListener() {
