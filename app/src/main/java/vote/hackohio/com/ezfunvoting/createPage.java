@@ -14,7 +14,9 @@ public class createPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
     /** Called when the user touches the join button */
-    public void sendMessage(View view) {
-        // Do something in response to button click
+    public void createGroup(View view) {
+        String groupName = findViewById(R.id.editText).toString();
+        Intent createGroupPage = new Intent(createPage.this, VoteActivity.class);
+        startActivity(createGroupPage);
     }
 }
