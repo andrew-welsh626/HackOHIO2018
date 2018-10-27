@@ -74,7 +74,9 @@ public class VoteActivity extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupName);
         for (int i = 0; i < options.size(); i++) {
-            ref.child(options.get(i).getId()).setValue(options.get(i));
+            OptionModel option = options.get(i);
+            option.rankings.put(this.userID, i + 1);
+            ref.child(option.getId()).setValue(options.get(i));
         }
 
     }
