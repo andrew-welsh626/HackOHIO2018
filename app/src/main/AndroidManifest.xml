@@ -17,8 +17,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddActivity" />
-        <activity android:name=".CreateActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".CreateActivity"
+            android:label= "CreateActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>/>
+        <activity android:name=".JoinActivity"
+            android:label= "JoinActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity android:name=".VoteActivity"
             android:label="@string/title_activity_vote"
             android:parentActivityName=".MainActivity">
