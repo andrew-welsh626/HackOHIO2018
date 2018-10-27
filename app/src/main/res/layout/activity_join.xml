@@ -20,20 +20,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/editTextJoin" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="23dp"
         android:layout_marginBottom="23dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Group name"
         app:layout_constraintBottom_toTopOf="@+id/addbtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.348"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

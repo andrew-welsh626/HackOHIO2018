@@ -1,5 +1,6 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,6 +38,10 @@ public class AddActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("groups/" + groupName);
         OptionModel option = new OptionModel(optionName);
         myRef.push().setValue(option);
+
+        Intent intent = new Intent(this, VoteActivity.class);
+        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(intent);
 
     }
 }
