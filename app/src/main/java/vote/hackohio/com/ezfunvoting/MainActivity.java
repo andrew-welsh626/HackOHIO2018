@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, VoteActivity.class);
         intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, "name 1");
         startActivity(intent);
-
     }
 
     public void joinPage(View v) {

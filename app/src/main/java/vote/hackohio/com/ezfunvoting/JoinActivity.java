@@ -22,11 +22,10 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
-    protected void joinGroup (View v) {
+    public void joinGroup (View v) {
         EditText groupNameET = findViewById(R.id.editText);
         String groupName = groupNameET.getText().toString();
         Intent createGroupPage = new Intent(JoinActivity.this, VoteActivity.class);
-        createGroupPage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
         startActivity(createGroupPage);
     }
 }
