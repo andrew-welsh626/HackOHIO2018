@@ -22,6 +22,10 @@
             android:label="@string/title_activity_vote"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity
+            android:name=".Results"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

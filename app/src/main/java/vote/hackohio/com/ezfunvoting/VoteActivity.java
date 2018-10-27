@@ -67,7 +67,6 @@ public class VoteActivity extends AppCompatActivity {
                 return true;
             case R.id.send_votes:
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);
