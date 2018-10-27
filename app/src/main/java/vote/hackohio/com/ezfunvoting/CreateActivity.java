@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class CreateActivity extends AppCompatActivity {
 
     private String algorithmName;
+    private TextView tvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class CreateActivity extends AppCompatActivity {
 
         final EditText groupNameET = findViewById(R.id.editTextCreate);
         groupNameET.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        tvDescription = findViewById(R.id.tv_algo_description);
 
         // create the spinner
         final Spinner algorithmSpinner = findViewById(R.id.algSpinner);
@@ -45,6 +48,11 @@ public class CreateActivity extends AppCompatActivity {
             //Keep spinner variable up to date
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 algorithmName = (String) (parent.getItemAtPosition(position));
+                if (algorithmName.equals("Average Ranking")) {
+                    tvDescription.setText(getString(R.string.description_weighted_ranking));
+                } else if (algorithmName.equals("Instant Run-off")) {
+                    tvDescription.setText(getString(R.string.description_runoff));
+                }
             }
 
             public void onNothingSelected(AdapterView<?> parent) {

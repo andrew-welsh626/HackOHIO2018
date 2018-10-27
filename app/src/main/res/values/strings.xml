@@ -10,9 +10,17 @@
     <string name="instructions">Instructions: Add new options with ADD. *Hold* and drag each option to indicate your order of preference. Then, select VOTE. </string>
     <string name="group_name">Group Name</string>
     <string name="enter_a_name_for_your_group">Enter a name for your group</string>
-    <string-array name="SpinnerChoices"><item>Weighted Ranking</item><item>Exhaustive Ballot</item></string-array>
+    <string-array name="SpinnerChoices"><item>Average Ranking</item><item>Instant Run-off</item></string-array>
     <string name="enter_your_group_s_id">Enter your group\'s ID</string>
     <string name="one">1.</string>
     <string name="default_winner">Default Winner</string>
     <string name="and_the_winner_is">And the Winner is...</string>
+    <string name="pick_a_voting_algorithm">Pick a voting algorithm</string>
+    <string name="default_description">Voting Algorithm description</string>
+    <string name="description_weighted_ranking">Average Ranking works by averaging the rank that all voters
+        give to each option. The Option with the lowest average rank will be chosen as the winner.</string>
+    <string name="description_runoff">Instant Run-off voting works by counting votes for everyone\'s
+        first choice. The option that fewest people choose as their first choice is eliminated.
+        Then, the process repeats and counts votes for each voter\'s favorite among the remaining options,
+        eliminating on option on each repetition. The winning choices is the last remaining option. </string>
 </resources>

@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Pick a sorting algorithm"
+        android:text="@string/pick_a_voting_algorithm"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,5 +70,23 @@
         app:layout_constraintStart_toStartOf="@id/editTextCreate"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_pick_algorithm"
         />
+
+    <TextView
+        android:id="@+id/tv_algo_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/description_runoff"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createbtn"
+        android:gravity="center"/>
+
 
 </android.support.constraint.ConstraintLayout>
