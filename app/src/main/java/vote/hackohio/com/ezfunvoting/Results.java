@@ -49,7 +49,6 @@ public class Results extends AppCompatActivity {
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
         resultRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         resultRecyclerView.setAdapter(adapter);
-
         generateRankings();
 
     }
