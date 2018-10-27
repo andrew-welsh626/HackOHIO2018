@@ -35,7 +35,7 @@ public class VoteActivity extends AppCompatActivity {
     private RecyclerView votingRecyclerView;
     private OptionsAdapter adapter;
     private List<OptionModel> options = new ArrayList<>();
-    private String groupName = "new group";
+    private String groupName;
     private String userID;
 
     /**
