@@ -13,7 +13,7 @@ public class CreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
-        final Button button = findViewById(R.id.addbtn);
+        final Button button = findViewById(R.id.createbtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 createGroup(v);
