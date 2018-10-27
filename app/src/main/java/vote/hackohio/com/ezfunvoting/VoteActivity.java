@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +121,15 @@ public class VoteActivity extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                OptionModel option = dataSnapshot.getValue(OptionModel.class);
-                option.setId(dataSnapshot.getKey());
-                options.add(option);
-                adapter.notifyDataSetChanged();
+
+                if (dataSnapshot.getKey().equals("name")) {
+                    getSupportActionBar().setTitle((String) dataSnapshot.getValue());
+                } else {
+                    OptionModel option = dataSnapshot.getValue(OptionModel.class);
+                    option.setId(dataSnapshot.getKey());
+                    options.add(option);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
