@@ -12,6 +12,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
+//https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
+
 public class AddActivity extends AppCompatActivity {
 
     @Override
@@ -20,19 +25,22 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         final Button button = findViewById(R.id.addbtn);
+        final String groupName = getIntent().getStringExtra("GROUP_NAME");
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                addOption(v);
+                addOption(v,groupName);
             }
         });
     }
 
-    protected void addOption(View v){
+    protected void addOption(View v, String groupName){
         String optionName = findViewById(R.id.editText).toString();
-        // Write a message to the database
+        // Add the option to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("groups/swanky-unarmed-heptagons/Sent From Andrio Studio");
+        DatabaseReference myRef = database.getReference("groups/" + groupName +"/" + optionName);
 
-        myRef.setValue("Food Eat Yum");
+        myRef.setValue(new HashMap<String, Integer>());
+
     }
 }
