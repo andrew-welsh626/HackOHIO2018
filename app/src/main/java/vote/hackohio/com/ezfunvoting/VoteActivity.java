@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class VoteActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class VoteActivity extends AppCompatActivity {
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
     String groupName;
+    String userID;
 
     public static final String GROUP_NAME_EXTRA_KEY = "GROUP_NAME";
 
@@ -33,8 +39,35 @@ public class VoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
 
-
         votingRecyclerView = findViewById(R.id.rv_vote);
+
+        this.userID = UUID.randomUUID().toString();
+
+        ItemTouchHelper itemTouchHelper =
+                new ItemTouchHelper(
+                        new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                final int fromPosition = viewHolder.getAdapterPosition();
+                final int toPosition = target.getAdapterPosition();
+
+                OptionModel movedOptions = options.remove(fromPosition);
+
+                if (toPosition > fromPosition) {
+                    options.add(toPosition - 1, movedOptions);
+                } else {
+                    options.add(toPosition, movedOptions);
+                }
+
+                adapter.notifyItemMoved(fromPosition, toPosition);
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {}
+        });
 
         adapter = new OptionsAdapter(options);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -47,6 +80,8 @@ public class VoteActivity extends AppCompatActivity {
         options.add(new OptionModel("Option 2"));
         options.add(new OptionModel("Option 3"));
         adapter.notifyDataSetChanged();
+
+        itemTouchHelper.attachToRecyclerView(votingRecyclerView);
     }
 
     @Override
@@ -54,6 +89,15 @@ public class VoteActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_voting, menu);
         return true;
+    }
+
+    public void sendVotesToDatabase() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupName);
+        for (int i = 0; i < options.size(); i++) {
+            ref.child(options.get(i).name + "/" + this.userID).setValue(i + 1);
+        }
+
     }
 
     @Override
@@ -66,52 +110,12 @@ public class VoteActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.send_votes:
+                sendVotesToDatabase();
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
-
-    }
-
-    public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionViewHolder> {
-
-        private List<OptionModel> optionsList;
-
-        public OptionsAdapter(List<OptionModel> optionsList) {
-            this.optionsList = optionsList;
-        }
-
-        @NonNull
-        @Override
-        public OptionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_option, parent, false);
-
-            return new OptionViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull OptionViewHolder holder, int position) {
-            OptionModel option = optionsList.get(position);
-            holder.tvOptionName.setText(option.name);
-        }
-
-        @Override
-        public int getItemCount() {
-            return optionsList.size();
-        }
-
-        public class OptionViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView tvOptionName;
-
-            public OptionViewHolder(@NonNull View itemView) {
-                super(itemView);
-                this.tvOptionName = itemView.findViewById(R.id.tv_option_name);
-            }
-
-        }
 
     }
 
