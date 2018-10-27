@@ -33,8 +33,6 @@ public class Results extends AppCompatActivity {
     RecyclerView resultRecyclerView;
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
-    String groupName;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +46,19 @@ public class Results extends AppCompatActivity {
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
         resultRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         resultRecyclerView.setAdapter(adapter);
-        groupName = getIntent().getStringExtra("GROUP_NAME");
-
-        generateRankings();
-
+        String groupName = getIntent().getStringExtra("GROUP_NAME");
+        String algName = getIntent().getStringExtra("ALG_NAME");
+        generateRankings(groupName, algName);
     }
 
-    protected void generateRankings() {
+    protected void generateRankings(String groupName, String algName) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("groups/" + groupName);
         ref.addChildEventListener(
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name")) {
+                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
                             options.add(o);
                             reorderRanks();
@@ -75,9 +73,11 @@ public class Results extends AppCompatActivity {
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
+
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }

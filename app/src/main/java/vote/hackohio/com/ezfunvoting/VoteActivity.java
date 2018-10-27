@@ -90,7 +90,7 @@ public class VoteActivity extends AppCompatActivity {
             this.userID = UUID.randomUUID().toString();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(SP_UID_KEY, userID);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -106,7 +106,6 @@ public class VoteActivity extends AppCompatActivity {
      * database with those rankings.
      */
     private void sendVotesToDatabase() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupID);
         for (int i = 0; i < options.size(); i++) {
             OptionModel option = options.get(i);
@@ -124,10 +123,9 @@ public class VoteActivity extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 if (dataSnapshot.getKey().equals("name")) {
                     getSupportActionBar().setTitle((String) dataSnapshot.getValue());
-                } else if (!dataSnapshot.getKey().equals("id")) {
+                } else if (!dataSnapshot.getKey().equals("id") && !dataSnapshot.getKey().equals("algorithm")) {
                     OptionModel option = dataSnapshot.getValue(OptionModel.class);
                     option.setId(dataSnapshot.getKey());
                     options.add(option);

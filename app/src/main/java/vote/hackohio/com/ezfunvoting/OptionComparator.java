@@ -24,7 +24,7 @@ public class OptionComparator implements Comparator<OptionModel> {
         if(opt1Sum == opt2Sum) {
             return 0;
         }
-        return opt1Sum - opt2Sum; // negative = option 1 is better, positive = option 2
+        return opt1Sum - opt2Sum; // positive = option 1 is better, negative = option 2
     }
 
 }
