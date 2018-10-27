@@ -17,7 +17,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainVotePage" />
-        <activity android:name=".AddActivity"></activity>
+        <activity
+            android:name=".AddActivity"
+            android:parentActivityName=".MainVotePage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainVotePage"/>
+        </activity>
     </application>
 
 </manifest>
