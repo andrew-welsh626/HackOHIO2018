@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,12 +135,16 @@ public class VoteActivity extends AppCompatActivity {
                     options.add(option);
                     adapter.notifyDataSetChanged();
                 }
+
+                Collections.sort(options, new SingleUserOptionComparator(userID));
+
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 OptionModel option = dataSnapshot.getValue(OptionModel.class);
                 options.set(options.indexOf(option), option);
+                Collections.sort(options, new SingleUserOptionComparator(userID));
             }
 
             @Override
@@ -209,5 +215,24 @@ public class VoteActivity extends AppCompatActivity {
         Intent createActivity = new Intent(this, Results.class);
         createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, this.groupID);
         startActivity(createActivity);
+    }
+
+    public class SingleUserOptionComparator implements Comparator<OptionModel> {
+
+        private String userID;
+
+        public SingleUserOptionComparator(String uid) {
+            userID = uid;
+        }
+
+        @Override
+        public int compare(OptionModel optionModel1, OptionModel optionModel2) {
+            int option1Rank = (optionModel1.rankings.containsKey(userID)) ? optionModel1.rankings.get(userID) : Integer.MAX_VALUE;
+            int option2Rank = (optionModel2.rankings.containsKey(userID)) ? optionModel2.rankings.get(userID) : Integer.MAX_VALUE;
+
+            return option1Rank - option2Rank;
+
+        }
+
     }
 }
