@@ -5,6 +5,9 @@
     <string name="add">Add</string>
     <string name="default_group_id">1234</string>
     <string name="your_group_id_label">Your group ID:</string>
-    <string name="create_a_room">Create a room</string>
+    <string name="create_a_room">Create room</string>
     <string name="join_a_room">Join a room</string>
+    <string name="instructions">Instructions: Add new options with ADD. Click and drag each option to indicate your order of preference. Then, select VOTE. </string>
+    <string name="group_name">Group Name</string>
+    <string name="enter_a_name_for_your_group">Enter a name for your group</string>
 </resources>
