@@ -71,14 +71,17 @@ public class Results extends AppCompatActivity {
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
+
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
     }
+
 
     protected void reorderRanks(OptionModel om) {
         options.add(om);

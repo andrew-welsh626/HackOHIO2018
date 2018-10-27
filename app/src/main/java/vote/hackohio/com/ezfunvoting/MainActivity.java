@@ -16,15 +16,15 @@ public class MainActivity extends AppCompatActivity {
         Button create = findViewById(R.id.button2);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent CreateActivity = new Intent(MainActivity.this, CreateActivity.class);
-                startActivity(CreateActivity);
+                Intent createActivity = new Intent(MainActivity.this, CreateActivity.class);
+                startActivity(createActivity);
             }
         });
         Button join = findViewById(R.id.button3);
         join.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent JoinActivity = new Intent(MainActivity.this, JoinActivity.class);
-                startActivity(JoinActivity);
+                Intent joinActivity = new Intent(MainActivity.this, JoinActivity.class);
+                startActivity(joinActivity);
             }
         });
     }

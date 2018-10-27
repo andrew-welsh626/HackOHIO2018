@@ -162,6 +162,7 @@ public class VoteActivity extends AppCompatActivity {
                 return true;
             case R.id.send_votes:
                 sendVotesToDatabase();
+                goToResultsPage();
                 return true;
         }
 
@@ -196,7 +197,9 @@ public class VoteActivity extends AppCompatActivity {
 
     }
 
-
-
-
+    public void goToResultsPage(){
+        Intent createActivity = new Intent(this, Results.class);
+        createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(createActivity);
+    }
 }
