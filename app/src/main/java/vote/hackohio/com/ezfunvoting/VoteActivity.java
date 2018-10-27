@@ -1,6 +1,8 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,13 +29,21 @@ import java.util.UUID;
 
 public class VoteActivity extends AppCompatActivity {
 
-    RecyclerView votingRecyclerView;
-    OptionsAdapter adapter;
-    List<OptionModel> options = new ArrayList<>();
-    String groupName = "new group";
-    String userID;
+    /**
+     * Instance variables
+     */
+    private RecyclerView votingRecyclerView;
+    private OptionsAdapter adapter;
+    private List<OptionModel> options = new ArrayList<>();
+    private String groupName = "new group";
+    private String userID;
 
+    /**
+     * Constants and map keys
+     */
     public static final String GROUP_NAME_EXTRA_KEY = "GROUP_NAME";
+    public static final String SHARED_PREF_NAME = "sharedprefs";
+    public static final String SP_UID_KEY = "shared preferences user id key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +51,7 @@ public class VoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vote);
 
         votingRecyclerView = findViewById(R.id.rv_vote);
-
-        /* TODO store this in the config file */
-        this.userID = UUID.randomUUID().toString();
+        createOrReadUID();
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(getItemTouchHelper());
 
@@ -63,6 +71,22 @@ public class VoteActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(votingRecyclerView);
     }
 
+    /**
+     * Attempts to read the user ID from the shared preferences file. If it does not exist, the user
+     * is given a new UID and this value is stored in the Shared Preferences file.
+     */
+    private void createOrReadUID() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferences.contains(SP_UID_KEY)) {
+            this.userID = sharedPreferences.getString(SP_UID_KEY, "");
+        } else {
+            this.userID = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(SP_UID_KEY, userID);
+            editor.commit();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -70,7 +94,11 @@ public class VoteActivity extends AppCompatActivity {
         return true;
     }
 
-    public void sendVotesToDatabase() {
+    /**
+     * Update each of the options with this user's ranking, then put each of the options in the
+     * database with those rankings.
+     */
+    private void sendVotesToDatabase() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/groups/" + groupName);
         for (int i = 0; i < options.size(); i++) {
@@ -81,6 +109,9 @@ public class VoteActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets up the Firebase database event listener to keep data up to date with the database.
+     */
     private void setupDataListener() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("groups/" + this.groupName);
@@ -137,6 +168,9 @@ public class VoteActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Provides the gesture controls for moving the options up and down in the {@link RecyclerView}.
+     */
     public ItemTouchHelper.SimpleCallback getItemTouchHelper() {
 
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
