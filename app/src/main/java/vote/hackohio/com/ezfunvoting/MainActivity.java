@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent joinActivity = new Intent(MainActivity.this, JoinActivity.class);
                 startActivity(joinActivity);
+
             }
         });
     }
