@@ -1,5 +1,6 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -20,12 +21,15 @@ public class CreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+        final EditText groupNameET = findViewById(R.id.editTextCreate);
+        groupNameET.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
+
         final Button button = findViewById(R.id.createbtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 // get the group ID
-                EditText groupNameET = findViewById(R.id.editTextCreate);
                 final String groupName = groupNameET.getText().toString();
 
                 // Generate a unique
