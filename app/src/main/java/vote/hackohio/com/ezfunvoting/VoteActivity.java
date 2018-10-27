@@ -53,6 +53,8 @@ public class VoteActivity extends AppCompatActivity {
         votingRecyclerView = findViewById(R.id.rv_vote);
         createOrReadUID();
 
+        this.groupName = getIntent().getStringExtra(GROUP_NAME_EXTRA_KEY);
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(getItemTouchHelper());
 
         /* Create the adapter and setup the recyclerview */
