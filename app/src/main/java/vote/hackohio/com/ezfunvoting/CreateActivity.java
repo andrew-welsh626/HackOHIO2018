@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class CreateActivity extends AppCompatActivity {
     @Override
@@ -20,8 +21,10 @@ public class CreateActivity extends AppCompatActivity {
     }
     /** Called when the user touches the join button */
     public void createGroup(View view) {
-        String groupName = findViewById(R.id.editText).toString();
+        EditText groupNameET = findViewById(R.id.editText);
+        String groupName = groupNameET.getText().toString();
         Intent createGroupPage = new Intent(CreateActivity.this, VoteActivity.class);
+        createGroupPage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
         startActivity(createGroupPage);
     }
 }

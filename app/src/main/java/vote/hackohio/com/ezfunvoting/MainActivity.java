@@ -1,4 +1,5 @@
 package vote.hackohio.com.ezfunvoting;
+
 import android.content.Intent;
 import android.view.View;
 
@@ -12,26 +13,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-Button create = findViewById(R.id.button2);
+
+Button create = findViewById(R.id.button3);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                createPage(v);
+                Intent CreateActivity = new Intent(MainActivity.this, CreateActivity.class);
+                startActivity(CreateActivity);
             }
         });
-        Button join = findViewById(R.id.button3);
+        Button join = findViewById(R.id.button2);
         join.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                JoinActivity(v);
+                Intent JoinActivity = new Intent(MainActivity.this, JoinActivity.class);
+                startActivity(JoinActivity);
             }
         });
-    }
-
-    public void JoinActivity(View v) {
-        Intent JoinActivity = new Intent(MainActivity.this, JoinActivity.class);
-        startActivity(JoinActivity);
-    }
-    public void createPage(View v) {
-        Intent createPage = new Intent(MainActivity.this, createPage.class);
-        startActivity(createPage);
     }
 }
