@@ -120,7 +120,6 @@ public class VoteActivity extends AppCompatActivity {
      * Sets up the Firebase database event listener to keep data up to date with the database.
      */
     private void setupDataListener() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("groups/" + this.groupID);
         ref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -208,7 +207,7 @@ public class VoteActivity extends AppCompatActivity {
 
     public void goToResultsPage(){
         Intent createActivity = new Intent(this, Results.class);
-        createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        createActivity.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, this.groupID);
         startActivity(createActivity);
     }
 }

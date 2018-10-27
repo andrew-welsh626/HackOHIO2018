@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class Results extends AppCompatActivity {
     RecyclerView resultRecyclerView;
     OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
-    String groupName = "new group";//getIntent().getStringExtra("GROUP_NAME");
+    String groupName = "1004"; //getIntent().getStringExtra("GROUP_NAME");
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
@@ -60,12 +61,16 @@ public class Results extends AppCompatActivity {
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        OptionModel o = dataSnapshot.getValue(OptionModel.class);
-                        reorderRanks(o);
+                        if(!dataSnapshot.getKey().equals("name")) {
+                            OptionModel o = dataSnapshot.getValue(OptionModel.class);
+                            options.add(o);
+                            reorderRanks();
+                        }
                     }
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        reorderRanks();
                     }
 
                     @Override
@@ -82,11 +87,11 @@ public class Results extends AppCompatActivity {
                 });
     }
 
-
-    protected void reorderRanks(OptionModel om) {
-        options.add(om);
+    /**
+        Reorder the rankings and update the page
+     **/
+    protected void reorderRanks() {
         Collections.sort(options);
         adapter.notifyDataSetChanged();
     }
-
 }
