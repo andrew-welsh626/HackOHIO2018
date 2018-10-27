@@ -23,7 +23,7 @@ public class JoinActivity extends AppCompatActivity {
     }
 
     public void joinGroup (View v) {
-        EditText groupNameET = findViewById(R.id.editText2);
+        EditText groupNameET = findViewById(R.id.editTextJoin);
         String groupName = groupNameET.getText().toString();
         Intent joinVotePage = new Intent(JoinActivity.this, VoteActivity.class);
         joinVotePage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);

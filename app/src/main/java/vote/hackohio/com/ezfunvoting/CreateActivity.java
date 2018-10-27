@@ -16,16 +16,13 @@ public class CreateActivity extends AppCompatActivity {
         final Button button = findViewById(R.id.createbtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                createGroup(v);
+
+                EditText groupNameET = findViewById(R.id.editTextCreate);
+                String groupName = groupNameET.getText().toString();
+                Intent joinVotePage = new Intent(CreateActivity.this, VoteActivity.class);
+                joinVotePage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+                startActivity(joinVotePage);
             }
         });
-    }
-    /** Called when the user touches the join button */
-    public void createGroup(View view) {
-        EditText groupNameET = findViewById(R.id.editText);
-        String groupName = groupNameET.getText().toString();
-        Intent createGroupPage = new Intent(CreateActivity.this, VoteActivity.class);
-        createGroupPage.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
-        startActivity(createGroupPage);
     }
 }
