@@ -12,4 +12,7 @@
     <string name="enter_a_name_for_your_group">Enter a name for your group</string>
     <string-array name="SpinnerChoices"><item>Weighted Ranking</item><item>Exhaustive Ballot</item></string-array>
     <string name="enter_your_group_s_id">Enter your group\'s ID</string>
+    <string name="one">1.</string>
+    <string name="default_winner">Default Winner</string>
+    <string name="and_the_winner_is">And the Winner is...</string>
 </resources>

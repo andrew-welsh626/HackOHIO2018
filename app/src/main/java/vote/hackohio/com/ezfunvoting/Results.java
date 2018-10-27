@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,10 +34,11 @@ import java.util.TreeSet;
 
 public class Results extends AppCompatActivity {
     RecyclerView resultRecyclerView;
-    OptionsAdapter adapter;
+    ResultsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
     String groupName;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    TextView winner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +46,19 @@ public class Results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         resultRecyclerView = findViewById(R.id.rv_results);
-        adapter = new OptionsAdapter(options);
+        winner = findViewById(R.id.tv_winner);
+        adapter = new ResultsAdapter(options);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         resultRecyclerView.setLayoutManager(mLayoutManager);
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
         resultRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         resultRecyclerView.setAdapter(adapter);
-        String groupName = getIntent().getStringExtra("GROUP_NAME");
-        String algName = getIntent().getStringExtra("ALG_NAME");
-        generateRankings(groupName, algName);
+        groupName = getIntent().getStringExtra("GROUP_NAME");
+
+        generateRankings();
+
     }
 
-    protected void generateRankings(String groupName, String algName) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     public boolean onSupportNavigateUp() {
         Intent intent = new Intent(this, VoteActivity.class);
@@ -93,17 +95,19 @@ public class Results extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        reorderRanks();
+                        if(!dataSnapshot.getKey().equals("name")) {
+                            OptionModel o = dataSnapshot.getValue(OptionModel.class);
+                            options.set(options.indexOf(o), o);
+                            reorderRanks();
+                        }
                     }
 
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
-
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
@@ -111,12 +115,14 @@ public class Results extends AppCompatActivity {
     }
 
     /*
-    * Sorts the options and updates the page
-    */
+     * Sorts the options and updates the page
+     */
     protected void reorderRanks() {
         OptionComparator sortRankings = new OptionComparator();
         Collections.sort(options, sortRankings);
         adapter.notifyDataSetChanged();
+
+        winner.setText(options.get(0).name);
     }
 
 }

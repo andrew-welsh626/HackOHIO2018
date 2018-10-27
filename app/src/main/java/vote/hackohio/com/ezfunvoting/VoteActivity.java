@@ -140,9 +140,13 @@ public class VoteActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                OptionModel option = dataSnapshot.getValue(OptionModel.class);
-                options.set(options.indexOf(option), option);
-                Collections.sort(options, new SingleUserOptionComparator(userID));
+
+                if (!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("id")) {
+                    OptionModel option = dataSnapshot.getValue(OptionModel.class);
+                    options.set(options.indexOf(option), option);
+                    Collections.sort(options, new SingleUserOptionComparator(userID));
+                }
+
             }
 
             @Override
