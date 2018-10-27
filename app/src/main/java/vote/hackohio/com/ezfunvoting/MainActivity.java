@@ -13,14 +13,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button create = findViewById(R.id.button1);
+//        Intent intent = new Intent(MainActivity.this, VoteActivity.class);
+//        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, "new group");
+//        startActivity(intent);
+
+        Button create = findViewById(R.id.button_create);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent createActivity = new Intent(MainActivity.this, CreateActivity.class);
                 startActivity(createActivity);
             }
         });
-        Button join = findViewById(R.id.button2);
+        Button join = findViewById(R.id.button_join);
         join.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent joinActivity = new Intent(MainActivity.this, JoinActivity.class);
@@ -28,6 +32,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    }
+}

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -76,22 +75,21 @@ public class Results extends AppCompatActivity {
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
-
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
     }
 
-    /**
-        Reorder the rankings and update the page
-     **/
+    /*
+    * Sorts the options
+    */
     protected void reorderRanks() {
-        Collections.sort(options);
-        adapter.notifyDataSetChanged();
+        OptionComparator sortRankings = new OptionComparator();
+        Collections.sort(options, sortRankings);
     }
+
 }
