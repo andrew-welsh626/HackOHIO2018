@@ -13,14 +13,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button create = findViewById(R.id.button2);
+        Button create = findViewById(R.id.button1);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent CreateActivity = new Intent(MainActivity.this, CreateActivity.class);
                 startActivity(CreateActivity);
             }
         });
-        Button join = findViewById(R.id.button3);
+        Button join = findViewById(R.id.button2);
         join.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent JoinActivity = new Intent(MainActivity.this, JoinActivity.class);

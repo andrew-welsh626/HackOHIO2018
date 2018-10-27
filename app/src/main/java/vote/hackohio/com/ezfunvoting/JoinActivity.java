@@ -14,7 +14,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        final Button button = findViewById(R.id.addbtn);
+        final Button button = findViewById(R.id.joinbtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 joinGroup(v);
