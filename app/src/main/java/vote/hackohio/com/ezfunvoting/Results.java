@@ -13,7 +13,7 @@ import java.util.List;
 public class Results extends AppCompatActivity {
 
     RecyclerView resultRecyclerView;
-    VoteActivity.OptionsAdapter adapter;
+    OptionsAdapter adapter;
     List<OptionModel> options = new ArrayList<>();
 
 
@@ -23,7 +23,7 @@ public class Results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         resultRecyclerView = findViewById(R.id.rv_results);
-        adapter = new VoteActivity.OptionsAdapter(options);
+        adapter = new OptionsAdapter(options);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         resultRecyclerView.setLayoutManager(mLayoutManager);
         resultRecyclerView.setItemAnimator(new DefaultItemAnimator());
