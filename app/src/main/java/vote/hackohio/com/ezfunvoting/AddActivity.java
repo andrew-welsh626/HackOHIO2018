@@ -41,7 +41,7 @@ public class AddActivity extends AppCompatActivity {
         OptionModel option = new OptionModel(optionName);
         myRef.push().setValue(option);
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, VoteActivity.class);
         intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
         startActivity(intent);
 
