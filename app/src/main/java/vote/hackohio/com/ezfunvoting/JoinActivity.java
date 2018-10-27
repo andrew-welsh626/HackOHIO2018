@@ -11,7 +11,7 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_vote_page);
+        setContentView(R.layout.activity_join);
 
         final Button button = findViewById(R.id.addbtn);
         button.setOnClickListener(new View.OnClickListener() {
