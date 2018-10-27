@@ -16,10 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".AddActivity" />
+
         <activity
             android:name=".VoteActivity"
             android:label="@string/title_activity_vote"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".Results"
             android:parentActivityName=".MainActivity">
         </activity>
     </application>

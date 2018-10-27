@@ -11,8 +11,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
-//https://stackoverflow.com/questions/2d091465/how-do-i-pass-data-between-activities-in-android-application
-
 public class AddActivity extends AppCompatActivity {
 
     @Override

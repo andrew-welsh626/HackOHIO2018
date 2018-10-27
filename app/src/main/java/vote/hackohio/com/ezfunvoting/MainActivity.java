@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-Button create = findViewById(R.id.button2);
+        Button create = findViewById(R.id.button2);
+
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 createPage(v);
