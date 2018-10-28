@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+//TODO: sometimes I get 2 variables with the same ranking (1,1,3)
 public class Results extends AppCompatActivity {
 
     private RecyclerView resultRecyclerView;
@@ -144,16 +144,17 @@ public class Results extends AppCompatActivity {
                 break;
             case "Instant Run-off":
                 options = RunoffVoteSort.sort(options);
+                adapter.setOptionsList(options);
                 break;
             default:
                 throw new RuntimeException("Unexpected Algorithm String");
         }
         adapter.notifyDataSetChanged();
-        if(options.size()==0){
-         winnerTextView.setText("Nothing. There were no winners, because there were no options. D:");
-        }else {
+        if (options.size() == 0) {
+            winnerTextView.setText("Nothing. There were no winners, because there were no options. D:");
+        } else {
             winnerTextView.setText(options.get(0).name);
         }
-        }
+    }
 
 }

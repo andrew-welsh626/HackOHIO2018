@@ -12,26 +12,61 @@ import java.util.TreeMap;
 public class RunoffVoteSort {
     /**
      * Sort option models using the runoff voting system
+     *
      * @param listOrig
      * @return
      */
     public static List<OptionModel> sort(List<OptionModel> listOrig) {
         System.out.println(listOrig.size());
         List<OptionModel> sorted = new ArrayList<>();
+        //TODO: a complete deep copy of list
         List<OptionModel> list = new ArrayList<>(listOrig.size());
         for (int i = 0; i < listOrig.size(); i++) {
             list.add(listOrig.get(i));
         }
-        // a map with a key for each user, and a treemap of their option and
+        // a map with a key for each user, and a treemap of their options and
         // how much they prefer it
+        Map<String, TreeMap<Integer, OptionModel>> preferences = getPrefFromList(list);
         for (int i = 0; i < listOrig.size(); i++) {
-            Map<String, TreeMap<Integer, OptionModel>> preferences = getPrefFromList(list);
             OptionModel best = findBest(preferences, list.size());
             sorted.add(best);
+            removeFromList(preferences, best);
             list.remove(best);
         }
 
         return sorted;
+    }
+
+    /**
+     * Remove an element of the list, decreasing the rankings of all elements above it to
+     * maintain voting order
+     * @Updates preferences
+     */
+    private static void removeFromList(Map<String, TreeMap<Integer, OptionModel>> preferences,
+                                       OptionModel best) {
+        for (TreeMap<Integer, OptionModel> rankings : preferences.values()) {
+            int bestRank = findValue(rankings, best);
+            for (Map.Entry<Integer, OptionModel> e : rankings.entrySet()) {
+                if (e.getKey() > bestRank) {
+                    //should not overwrite data because the list is sorted
+                    rankings.put(e.getKey() - 1, e.getValue());
+                }
+            }
+            //last entry has 2 locations by the last loop logic
+            rankings.pollLastEntry();
+        }
+    }
+
+    /**
+     * returns the key associated with a value in a map
+     */
+    private static Integer findValue(TreeMap<Integer, OptionModel> map, OptionModel value) {
+        for (Map.Entry<Integer, OptionModel> entry : map.entrySet()) {
+            if (entry.getValue().equals(value)) {
+                return entry.getKey();
+            }
+        }
+        throw new RuntimeException("Could not find value for RunoffVoteSort");
     }
 
     /**
@@ -64,8 +99,9 @@ public class RunoffVoteSort {
      * @param models
      * @return the best choice of the algorithm
      */
-    private static OptionModel findBest(Map<String, TreeMap<Integer, OptionModel>> models, int n_choices) {
+    private static OptionModel findBest(Map<String, TreeMap<Integer, OptionModel>> modelsOrig, int n_choices) {
         //scores for each model
+        Map<String, TreeMap<Integer, OptionModel>> models = copy(modelsOrig);
         HashMap<OptionModel, Integer> scores = new HashMap<>();
         OptionModel bestChoice = null;
         boolean majority = false;
@@ -93,6 +129,19 @@ public class RunoffVoteSort {
             n_choices--;
         }
         return bestChoice;
+    }
+
+    //copy it a bit
+    private static Map<String, TreeMap<Integer, OptionModel>> copy(Map<String, TreeMap<Integer, OptionModel>> modelsOrig) {
+        Map<String, TreeMap<Integer, OptionModel>> copy = new HashMap<>();
+        for (Map.Entry<String, TreeMap<Integer, OptionModel>> entry : modelsOrig.entrySet()) {
+            TreeMap<Integer, OptionModel> copyMap = new TreeMap<>();
+            for (Map.Entry<Integer,OptionModel> e: entry.getValue().entrySet()) {
+               copyMap.put(e.getKey(),e.getValue());
+            }
+            copy.put(entry.getKey(),copyMap);
+        }
+        return copy;
     }
 
     /**

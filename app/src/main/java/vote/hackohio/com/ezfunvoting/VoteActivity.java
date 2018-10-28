@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-
+// TODO: Error joining rooms that don't exist
 public class VoteActivity extends AppCompatActivity {
 
     /**

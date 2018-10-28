@@ -16,7 +16,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     public ResultsAdapter(List<OptionModel> optionsList) {
         this.optionsList = optionsList;
     }
-
+    public void setOptionsList(List<OptionModel> o){
+        optionsList = o;
+    }
     @NonNull
     @Override
     public ResultsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
