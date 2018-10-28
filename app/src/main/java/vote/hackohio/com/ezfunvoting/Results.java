@@ -1,6 +1,8 @@
 package vote.hackohio.com.ezfunvoting;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ public class Results extends AppCompatActivity {
     private String groupName;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private TextView winnerTextView;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class Results extends AppCompatActivity {
 
         winnerTextView = findViewById(R.id.tv_winner);
         groupName = getIntent().getStringExtra("GROUP_NAME");
+
+        userID = getSharedPreferences(VoteActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE).getString(VoteActivity.SP_UID_KEY, "");
         
         /* Create the Recycler view and its adapter */
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -77,13 +82,18 @@ public class Results extends AppCompatActivity {
     }
 
     protected void generateRankings() {
-        DatabaseReference ref = database.getReference("groups/" + groupName);
+        final DatabaseReference ref = database.getReference("groups/" + groupName);
         ref.addChildEventListener(
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name")) {
+                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
+                            o.setId(dataSnapshot.getKey());
+                            if (!userID.isEmpty() && !o.rankings.containsKey(userID)) {
+                                o.rankings.put(userID, options.size() + 1);
+                                ref.child(dataSnapshot.getKey()).setValue(o);
+                            }
                             options.add(o);
                             reorderRanks();
                         }
@@ -91,8 +101,9 @@ public class Results extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name")) {
+                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
+                            o.setId(dataSnapshot.getKey());
                             options.set(options.indexOf(o), o);
                             reorderRanks();
                         }

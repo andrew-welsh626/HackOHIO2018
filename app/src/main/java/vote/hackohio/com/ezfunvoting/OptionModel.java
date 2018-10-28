@@ -32,7 +32,7 @@ public class OptionModel implements Comparable {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof OptionModel && ((OptionModel) other).id.equals(this.id);
+        return other instanceof OptionModel && ((OptionModel) other).name.equals(this.name);
     }
 
     @Override

@@ -23,4 +23,6 @@
         first choice. The option that fewest people choose as their first choice is eliminated.
         Then, the process repeats and counts votes for each voter\'s favorite among the remaining options,
         eliminating on option on each repetition. The winning choices is the last remaining option. </string>
+    <string name="add_option">Add Option</string>
+    <string name="please_enter_the_name_of_the_option">Please enter the name of the option</string>
 </resources>

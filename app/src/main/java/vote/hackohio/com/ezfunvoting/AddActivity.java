@@ -14,13 +14,15 @@ import java.util.HashMap;
 
 public class AddActivity extends AppCompatActivity {
 
+    private String groupName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        final Button button = findViewById(R.id.addbtn);
-        final String groupName = getIntent().getStringExtra("GROUP_NAME");
+        final Button button = findViewById(R.id.add_button);
+        groupName = getIntent().getStringExtra("GROUP_NAME");
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -29,8 +31,32 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     * Define behavior for the ActionBar home button
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = new Intent(this, VoteActivity.class);
+        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(intent);
+        finish();
+
+        return true;
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+
+        Intent intent = new Intent(this, VoteActivity.class);
+        intent.putExtra(VoteActivity.GROUP_NAME_EXTRA_KEY, groupName);
+        startActivity(intent);
+        finish();
+
+        return true;
+    }
+
     protected void addOption(View v, String groupName){
-        EditText optionNameET = findViewById(R.id.editText);
+        EditText optionNameET = findViewById(R.id.et_add);
         String optionName = optionNameET.getText().toString();
 
         // Add the option to the database
