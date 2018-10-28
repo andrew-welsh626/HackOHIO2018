@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
+
 //TODO: sometimes I get 2 variables with the same ranking (1,1,3)
 public class Results extends AppCompatActivity {
 

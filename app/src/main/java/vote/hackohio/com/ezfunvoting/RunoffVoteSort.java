@@ -17,9 +17,7 @@ public class RunoffVoteSort {
      * @return
      */
     public static List<OptionModel> sort(List<OptionModel> listOrig) {
-        System.out.println(listOrig.size());
         List<OptionModel> sorted = new ArrayList<>();
-        //TODO: a complete deep copy of list
         List<OptionModel> list = new ArrayList<>(listOrig.size());
         for (int i = 0; i < listOrig.size(); i++) {
             list.add(listOrig.get(i));
@@ -27,19 +25,32 @@ public class RunoffVoteSort {
         // a map with a key for each user, and a treemap of their options and
         // how much they prefer it
         Map<String, TreeMap<Integer, OptionModel>> preferences = getPrefFromList(list);
-        for (int i = 0; i < listOrig.size(); i++) {
-            OptionModel best = findBest(preferences, list.size());
-            sorted.add(best);
-            removeFromList(preferences, best);
-            list.remove(best);
+        if (allDifferent(preferences, list.size())) {
+            for (int i = 0; i < listOrig.size(); i++) {
+                OptionModel best = findBest(preferences, list.size());
+                sorted.add(best);
+                removeFromList(preferences, best);
+                list.remove(best);
+            }
+            return sorted;
+        } else {
+            return listOrig;
         }
+    }
 
-        return sorted;
+    protected static boolean allDifferent(Map<String, TreeMap<Integer, OptionModel>> pref, int n) {
+        for (TreeMap ranking : pref.values()) {
+            if (ranking.size() != n) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
      * Remove an element of the list, decreasing the rankings of all elements above it to
      * maintain voting order
+     *
      * @Updates preferences
      */
     private static void removeFromList(Map<String, TreeMap<Integer, OptionModel>> preferences,
@@ -96,8 +107,7 @@ public class RunoffVoteSort {
     }
 
     /**
-     * @param models
-     * @return the best choice of the algorithm
+     * @return the best choice of 1 loop of the algorithm
      */
     private static OptionModel findBest(Map<String, TreeMap<Integer, OptionModel>> modelsOrig, int n_choices) {
         //scores for each model
@@ -124,7 +134,8 @@ public class RunoffVoteSort {
             // otherwise, remove the lowest-ranked option.
             OptionModel unLovedOption = minByValue(scores);
             for (TreeMap<Integer, OptionModel> rankings : models.values()) {
-                rankings.remove(unLovedOption);
+                int v = findValue(rankings, unLovedOption);
+                rankings.remove(v);
             }
             n_choices--;
         }
@@ -136,10 +147,10 @@ public class RunoffVoteSort {
         Map<String, TreeMap<Integer, OptionModel>> copy = new HashMap<>();
         for (Map.Entry<String, TreeMap<Integer, OptionModel>> entry : modelsOrig.entrySet()) {
             TreeMap<Integer, OptionModel> copyMap = new TreeMap<>();
-            for (Map.Entry<Integer,OptionModel> e: entry.getValue().entrySet()) {
-               copyMap.put(e.getKey(),e.getValue());
+            for (Map.Entry<Integer, OptionModel> e : entry.getValue().entrySet()) {
+                copyMap.put(e.getKey(), e.getValue());
             }
-            copy.put(entry.getKey(),copyMap);
+            copy.put(entry.getKey(), copyMap);
         }
         return copy;
     }

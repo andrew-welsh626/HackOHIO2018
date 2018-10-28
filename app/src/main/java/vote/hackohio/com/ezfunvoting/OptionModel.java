@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class OptionModel implements Comparable {
+public class OptionModel{
 
     public String name;
     public Map<String, Integer> rankings;
@@ -63,9 +63,4 @@ public class OptionModel implements Comparable {
         this.rankings = rankings;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        OptionModel other = (OptionModel)(o);
-        return 0;
-    }
 }
