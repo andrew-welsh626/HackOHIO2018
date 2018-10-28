@@ -15,9 +15,6 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        EditText groupIDET = findViewById(R.id.editTextJoin);
-        groupIDET.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-
         final Button button = findViewById(R.id.joinbtn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

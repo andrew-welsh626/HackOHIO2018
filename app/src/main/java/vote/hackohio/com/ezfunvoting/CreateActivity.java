@@ -33,7 +33,6 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create);
 
         final EditText groupNameET = findViewById(R.id.editTextCreate);
-        groupNameET.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
         tvDescription = findViewById(R.id.tv_algo_description);
 
         // create the spinner

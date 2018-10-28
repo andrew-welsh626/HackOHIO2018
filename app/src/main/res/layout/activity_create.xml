@@ -28,13 +28,13 @@
         android:layout_marginTop="120dp"
         android:width="240dp"
         android:inputType="textPersonName"
-        android:shadowColor="#FFFFFF"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/tv_label_pick_algorithm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_edit_text"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="12dp"/>
 
     <TextView
         android:id="@+id/tv_label_pick_algorithm"
@@ -69,7 +69,10 @@
         app:layout_constraintEnd_toEndOf="@id/editTextCreate"
         app:layout_constraintStart_toStartOf="@id/editTextCreate"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_pick_algorithm"
-        />
+        android:background="@drawable/rounded_edit_text"
+        android:paddingVertical="10dp"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:id="@+id/tv_algo_description"
