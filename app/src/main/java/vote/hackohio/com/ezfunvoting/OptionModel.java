@@ -14,7 +14,7 @@ public class OptionModel implements Comparable {
 
     public OptionModel() {
         this.name = "";
-        this.rankings = new TreeMap<>();
+        this.rankings = new HashMap<>();
         this.id = "";
     }
 
@@ -28,7 +28,7 @@ public class OptionModel implements Comparable {
 
     public OptionModel(String name) {
         this.name = name;
-        this.rankings = new TreeMap<>();
+        this.rankings = new HashMap<>();
     }
 
     public OptionModel(String name, String id, Map<String,Integer> rankings) {
