@@ -2,11 +2,10 @@ package vote.hackohio.com.ezfunvoting;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +31,7 @@ public class Results extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private TextView winnerTextView;
     private String userID;
+    private String algorithm = "None";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class Results extends AppCompatActivity {
         groupName = getIntent().getStringExtra("GROUP_NAME");
 
         userID = getSharedPreferences(VoteActivity.SHARED_PREF_NAME, Context.MODE_PRIVATE).getString(VoteActivity.SP_UID_KEY, "");
-        
+
         /* Create the Recycler view and its adapter */
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         resultRecyclerView = findViewById(R.id.rv_results);
@@ -87,7 +87,10 @@ public class Results extends AppCompatActivity {
                 new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
+                        if (dataSnapshot.getKey().equals("algorithm")) {
+                            algorithm = dataSnapshot.getValue().toString();
+                            reorderRanks(algorithm);
+                        } else if (!dataSnapshot.getKey().equals("name")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
                             o.setId(dataSnapshot.getKey());
                             if (!userID.isEmpty() && !o.rankings.containsKey(userID)) {
@@ -95,26 +98,35 @@ public class Results extends AppCompatActivity {
                                 ref.child(dataSnapshot.getKey()).setValue(o);
                             }
                             options.add(o);
-                            reorderRanks();
+                            if (!algorithm.equals("None")) {
+                                reorderRanks(algorithm);
+                            }
                         }
                     }
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if(!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
+                        if (dataSnapshot.getKey().equals("algorithm")) {
+                            algorithm = dataSnapshot.getValue().toString();
+                            reorderRanks(algorithm);
+                        } else if (!dataSnapshot.getKey().equals("name") && !dataSnapshot.getKey().equals("algorithm")) {
                             OptionModel o = dataSnapshot.getValue(OptionModel.class);
                             o.setId(dataSnapshot.getKey());
                             options.set(options.indexOf(o), o);
-                            reorderRanks();
+                            if (!algorithm.equals("None")) {
+                                reorderRanks(algorithm);
+                            }
                         }
                     }
 
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
+
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
@@ -124,12 +136,24 @@ public class Results extends AppCompatActivity {
     /*
      * Sorts the options and updates the page
      */
-    protected void reorderRanks() {
-        OptionComparator sortRankings = new OptionComparator();
-        Collections.sort(options, sortRankings);
+    protected void reorderRanks(String algorithm) {
+        switch (algorithm) {
+            case "Average Ranking":
+                OptionComparator sortRankings = new OptionComparator();
+                Collections.sort(options, sortRankings);
+                break;
+            case "Instant Run-off":
+                options = RunoffVoteSort.sort(options);
+                break;
+            default:
+                throw new RuntimeException("Unexpected Algorithm String");
+        }
         adapter.notifyDataSetChanged();
-
-        winnerTextView.setText(options.get(0).name);
-    }
+        if(options.size()==0){
+         winnerTextView.setText("Nothing. There were no winners, because there were no options. D:");
+        }else {
+            winnerTextView.setText(options.get(0).name);
+        }
+        }
 
 }
